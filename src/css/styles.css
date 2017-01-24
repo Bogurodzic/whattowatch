@@ -3,8 +3,12 @@ body {
 	width: 100%;
 }
 
+.outside {
+	position: relative;
+	width: 530px;
+	margin: 0 auto;
+}
 .form-search {
-	width: 100%;
 	display: flex;
 	justify-content: center;
 }
@@ -39,17 +43,19 @@ body {
 }
 
 #search-list {
+	display: none;
+	position: absolute;
 	width: 500px;
 	padding: 0;
 	list-style: none;
 	background: hsla(0,0%,0%, 0.5);
 	margin: 0 auto;
-	transform: translateX(-15px);
+	z-index: 5;
 }
 
 #search-list li {
 	box-sizing: border-box;
-	padding: 5px 10px;
+	padding: 10px 10px;
 	color: white;
 	border: 1px solid grey;
 }
@@ -58,4 +64,6 @@ body {
 #search-list li:hover{
 	cursor: pointer;
 	background: hsla(0,0%,0%, 0.7);
+	font-weight: bold;
+	transition: all 0.05s linear;
 }
