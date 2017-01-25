@@ -1,4 +1,4 @@
-//Scripts responsible for Search Input
+//SCRIPTS RESPONSIBLE FOR SEARCH INPUT
 
 
 
@@ -25,9 +25,11 @@ $(searchIcon).on("click", function(){
 });
 
 //Hide film list
-$(".outside").mouseleave(function(){
+$(".search").mouseleave(function(){
 	if($(searchList).html() !== ""){
-		$(searchList).stop(true).slideUp();
+		$(searchList).slideUp(function(){
+			clear("#search-list", "html");
+		});
 	}
 });
 
@@ -38,10 +40,10 @@ function filmSearch(query){
 	var settings = getSettings(link);
 
 	$.ajax(settings).done(function(data){
-		clear("#search-list", "html");		
+		
 		$.each(data.results, function(index, value){
 			//create list element
-			var title = $(createElement("li", value.original_title))
+			var title = $(createElement("li", value.title))
 
 			$(title).on("click", function(){
 				filmDescription(value.id);
@@ -58,21 +60,57 @@ function filmSearch(query){
 
 function filmDescription(id){
 
-	var link = "http://api.themoviedb.org/3/movie/"+id+"?api_key=c4d475955f6473a3c143f712208e6b17";
+	var link = "http://api.themoviedb.org/3/movie/"+id+"?api_key=c4d475955f6473a3c143f712208e6b17&append_to_response=videos";
 	var settings = getSettings(link);
 
 	 $.ajax(settings).done(function(data){
+	 	var title = data.original_title;
+	 	var overview = data.overview;
+	 	var date = data.release_date;
+	 	var rating = data.vote_average;
 		var imgstring ="https://image.tmdb.org/t/p/w500/";
+		var youtubeKey = data.videos.results[0].key;
+		var genres = [];
 		imgstring += data.poster_path;
-		$(document.body).append(data.title);
-		$(document.body).append(createImage(imgstring));
-		//$(document.body).append("<iframe width='560' height='315' src='https://www.youtube.com/embed/"+data.videos.results[0].key+"' frameborder='0' allowfullscreen></iframe>")
+
+		$.each(data.genres, function(index, element){
+			console.log(element);
+			genres.push(element.name);
+		});
+
+		console.log(data);
+		console.log(data.genres);
+		console.log(genres);
+		console.log(data.videos.results[0].key);
+		$(document.body).append(createElement("div", "", "film"));
+		$(".film:last").append(createElement("div", "", "film-header"));
+		$(".film-header:last").append(createImage(imgstring)).addClass("film-image");
+		$(".film:last").append(createElement("div", "", "film-description"));
+		$(".film:last .film-description").append(createElement("h2", title, "film-title"));
+		$(".film:last .film-description").append(createElement("p", overview, "film-overview"));
+		$(".film:last .film-description").append("<iframe class='youtube' width='560' height='315' src='https://www.youtube.com/embed/"+youtubeKey+"' frameborder='0' allowfullscreen></iframe>");
+		$(createElement("div", "", "film-summary")).appendTo(".film:last .film-description");
+		$(".film:last .film-description .film-summary").append(createElement("p", "Genres: "+genres, ""));
+		$(".film:last .film-description .film-summary").append(createElement("p", "Rating: "+rating, "rating"));
+		$(".film:last").append("<i class='close fa fa-times fa-2x' aria-hidden='true'></i>").on("click", function(){
+			console.log("lllll");
+			$(this).remove();
+		});
+
+
+
 
 	});
 }
 
-function createElement(type, value){
-	return "<"+type+">" + value +"</"+type+">"
+
+
+function createElement(type, value, eleClass){
+	if (eleClass) {
+		return "<"+type+" class=" +eleClass+ ">" + value +"</"+type+">"
+	} else {
+		return "<"+type+">" + value +"</"+type+">"
+	}
 }
 
 function createImage(link){
