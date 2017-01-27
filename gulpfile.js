@@ -36,7 +36,7 @@ gulp.task("html", function(){
 
 gulp.task("copy", function(){
 
-	return gulp.src(["src/fonts/*", "src/css/*", "src/images/*"], {
+	return gulp.src(["src/fonts/*", "src/css/*", "src/img/*"], {
 		base: "src/"
 	})
 	.pipe(gulp.dest("build/"));

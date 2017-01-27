@@ -1,6 +1,15 @@
+
 body {
-	background: url(../img/background.jpg);
-	width: 100%;
+	/*background: url(../img/presence.png) repeat;*/
+background: #58a;
+background-image: -webkit-repeating-linear-gradient(60deg, 
+              hsla(0,0%,100%,.1), hsla(0,0%,100%,.1) 15px,
+              transparent 0, transparent 30px);
+background-image: repeating-linear-gradient(30deg, 
+              hsla(0,0%,100%,.1), hsla(0,0%,100%,.1) 15px,
+              transparent 0, transparent 30px);
+
+height: 100vh;
 }
 
 
@@ -8,6 +17,7 @@ body {
 
 .search {
 	position: relative;
+	padding-top: 100px;
 	width: 530px;
 	margin: 0 auto;
 }
@@ -38,6 +48,8 @@ body {
 }
 
 #search-text {
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 	width: 100px;
 	height: 35px;
     -webkit-transition: width 0.5s linear;
@@ -48,6 +60,10 @@ body {
 
 #search-text:hover {
 	cursor: pointer;
+}
+
+#search-text:focus {
+	outline-color: #93AAC5;
 }
 
 #search-list {
@@ -95,9 +111,11 @@ body {
 	max-width: 960px;
 	margin: 0 auto;
 	margin-top: 50px;
-	background: hsla(60,10%,50%,.9);
+	background: hsla(180,0%,40%,.9);
 	background-clip: padding-box;
-	border: 10px solid hsla(0,0%,100%,.5);
+	border: 10px solid hsla(0,0%,0%,.75);
+	-webkit-border-radius: 10px;
+	        border-radius: 10px;
 }
 
 .film-header {
@@ -133,10 +151,12 @@ body {
 	-webkit-flex-wrap: wrap;
 	    -ms-flex-wrap: wrap;
 	        flex-wrap: wrap;
+		font-family: 'Arsenal', sans-serif;
+
 }
 
 .film .film-description h2 {
-	font-size: 25px;
+	font-size: 22px;
 	text-align: center;
 	margin: 0 auto;
 	padding: 10px 5px;
@@ -144,15 +164,27 @@ body {
 	width: 100%;
 }
 
+.film .film-description .film-title-org {
+	font-size: 10px;
+	text-align: center;
+	padding-left: 10px;
+}
+
 .film .film-description > p {
+	font-size: 15px;
 	text-align: center;
 	padding: 10px 5px;
 	width: 100%;
 }
 
 .film .film-description .youtube {
+	-webkit-border-radius: 10px;
+	        border-radius: 10px;
+	-webkit-box-shadow: 5px;
+	        box-shadow: 5px;
 	display: block;
 	margin: 0 auto;
+	margin-bottom: 15px;
 }
 
 .film .film-description .film-summary {
@@ -169,6 +201,7 @@ body {
 
 .film .film-description .film-summary p {
 	padding: 0px 30px;
+	font-size: 13px;
 }
 
 .fa-times {

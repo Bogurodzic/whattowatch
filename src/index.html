@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Arsenal" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
@@ -9,18 +10,20 @@
 </head>
 <body>
 <div class="search">
-	<div id="random">RANDOM</div>
-
 	<form class="form-search">
 		<input id="search-text" type="text" name="search" placeholder=""><span id="search-icon"><i class="fa fa-search fa-2x" aria-hidden="true"></i></span>
 	</form>
 	<ul id="search-list"></ul>	
 </div>
-
-
-
+<div id="random">RANDOM</div> 
+<!-- build:js js/jquery-3.1.1.min.js -->
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<!-- endbuild -->
+<!-- build:js js/main.min.js -->
 <script type="text/javascript" src="js/main.js"></script>
+<!-- endbuild -->
+<!-- build:js js/search.min.js -->
 <script type="text/javascript" src="js/search.js"></script>
+<!-- endbuild -->
 </body>
 </html>

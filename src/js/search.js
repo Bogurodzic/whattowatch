@@ -21,8 +21,21 @@ $(search).on("focusout", function(){
 });
 
 $(searchIcon).on("click", function(){
+	clear("#search-list", "html");
 	filmSearch($(search).val());
 });
+
+$(".search").keydown(function(event){
+        if(event.keyCode === 13) {
+			clear("#search-list", "html");
+			filmSearch($(search).val());
+    		return false;
+        } else if (event.keyCode === 8) {
+			$(searchList).slideUp(function(){
+				clear("#search-list", "html");
+			});
+        }
+    });
 
 //Hide film list
 $(".search").mouseleave(function(){
@@ -34,6 +47,7 @@ $(".search").mouseleave(function(){
 });
 
 
+//create a list with films according to provided string
 function filmSearch(query){
 	
 	var link = "https://api.themoviedb.org/3/search/movie?api_key=c4d475955f6473a3c143f712208e6b17&query="+query;
@@ -57,19 +71,25 @@ function filmSearch(query){
 
 }
 
-
+//Create new film entry and fill it with api's information
 function filmDescription(id){
 
 	var link = "http://api.themoviedb.org/3/movie/"+id+"?api_key=c4d475955f6473a3c143f712208e6b17&append_to_response=videos";
 	var settings = getSettings(link);
 
 	 $.ajax(settings).done(function(data){
-	 	var title = data.original_title;
+	 	var title = data.title;
+	 	var orgTitle = data.original_title;
 	 	var overview = data.overview;
 	 	var date = data.release_date;
 	 	var rating = data.vote_average;
 		var imgstring ="https://image.tmdb.org/t/p/w500/";
-		var youtubeKey = data.videos.results[0].key;
+
+
+
+
+		
+		//var youtubeKey = data.videos.results[0].key;
 		var genres = [];
 		imgstring += data.poster_path;
 
@@ -79,31 +99,29 @@ function filmDescription(id){
 		});
 
 		console.log(data);
-		console.log(data.genres);
-		console.log(genres);
-		console.log(data.videos.results[0].key);
 		$(document.body).append(createElement("div", "", "film"));
 		$(".film:last").append(createElement("div", "", "film-header"));
 		$(".film-header:last").append(createImage(imgstring)).addClass("film-image");
 		$(".film:last").append(createElement("div", "", "film-description"));
 		$(".film:last .film-description").append(createElement("h2", title, "film-title"));
+		$(".film:last .film-description .film-title").append(createElement("span", "  org title: "+orgTitle, "film-title-org"));
 		$(".film:last .film-description").append(createElement("p", overview, "film-overview"));
-		$(".film:last .film-description").append("<iframe class='youtube' width='560' height='315' src='https://www.youtube.com/embed/"+youtubeKey+"' frameborder='0' allowfullscreen></iframe>");
+		$(".film:last .film-description").append(isTrailer(data));
 		$(createElement("div", "", "film-summary")).appendTo(".film:last .film-description");
 		$(".film:last .film-description .film-summary").append(createElement("p", "Genres: "+genres, ""));
+		$(".film:last .film-description .film-summary").append(createElement("p", "Realse: "+date, ""));
 		$(".film:last .film-description .film-summary").append(createElement("p", "Rating: "+rating, "rating"));
-		$(".film:last").append("<i class='close fa fa-times fa-2x' aria-hidden='true'></i>").on("click", function(){
-			console.log("lllll");
-			$(this).remove();
-		});
-
+		$(".film:last").append("<i class='close fa fa-times fa-2x' aria-hidden='true'></i>");
 
 
 
 	});
 }
 
-
+//Delegate function on every new film object
+$(document).on("click", ".film .close", function(){
+	$(this).parent().remove();
+});
 
 function createElement(type, value, eleClass){
 	if (eleClass) {
@@ -117,6 +135,29 @@ function createImage(link){
 	return ("<img src="+link+">");
 }
 
+//Check if film has key data and create youtube trailer, if not, create image
+function isTrailer(data){
+
+	var youtubeKey = (function lookForKeyError(){
+		var key;
+		try {
+			key = data.videos.results[0].key;
+		}
+		catch(err) {
+			key =false;
+			console.log(key);
+		}
+		return key;
+	})();
+
+	if (youtubeKey !== false) {
+		return $("<iframe width='560' height='315' src='https://www.youtube.com/embed/"+youtubeKey+"' frameborder='0' allowfullscreen></iframe>").addClass("youtube");
+	} else {
+		return $(createImage("http://www.k-state.edu/mog/images/No-Trailer.jpg")).addClass("youtube");
+	}
+}
+
+//ajax settings
 function getSettings(url){
 	return {
 		"async": true,
@@ -135,4 +176,5 @@ function clear(element, value){
 		$(element).html("");
 	}
 }
+
 
