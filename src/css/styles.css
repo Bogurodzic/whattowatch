@@ -83,6 +83,7 @@ height: 100vh;
 
 #search-text {
 	box-sizing: border-box;
+	border-radius: 10px;
 	width: 100px;
 	height: 35px;
 	transition: width 0.5s linear;
@@ -152,8 +153,9 @@ height: 100vh;
 
 .film-image img {
 	width: 85%;
+	padding-top: 10px;
 	height: auto;
-	border-radius: 5px;
+	border-radius: 15px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	margin: 0 auto;
 }
@@ -223,6 +225,75 @@ height: 100vh;
 	cursor: pointer;
 	opacity: 1;
 }
+
+
+/**** LOADER *****/
+
+#loader-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #ECF0F1;
+  /* display: none; */
+}
+
+.load {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    /* display: none; */
+}
+ 
+.load hr {
+    border: 0;
+    margin: 0;
+    width: 40%;
+    height: 40%;
+    position: absolute;
+    border-radius: 50%;
+    animation: spin 2s ease infinite;
+}
+ 
+.load :first-child {
+    background: grey;
+    animation-delay: -1.5s;
+}
+ 
+.load :nth-child(2) {
+    background: #1b5b83;
+    animation-delay: -1s;
+}
+ 
+.load :nth-child(3) {
+    background: black;
+    animation-delay: -0.5s;
+}
+ 
+.load :last-child {
+    background: #123e59;
+}
+ 
+@keyframes spin {
+    0%, 100% {
+        transform: translate(0)
+    }
+    25% {
+        transform: translate(160%)
+    }
+    50% {
+        transform: translate(160%, 160%)
+    }
+    75% {
+        transform: translate(0, 160%)
+    }
+}
+
 
 @media screen and (min-width: 480px) {
 

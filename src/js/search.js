@@ -1,6 +1,10 @@
 //SCRIPTS RESPONSIBLE FOR SEARCH INPUT
 
 
+$(window).on('load', function() {
+    $("#loader-wrapper").fadeOut(1000);
+});
+
 
 
 var search = $("#search-text");
@@ -93,12 +97,13 @@ function filmDescription(id){
 	 $.ajax(settings).done(function(data){
 	 	var title = data.title;
 	 	var orgTitle = data.original_title;
-	 	var overview = data.overview;
+	 	var overview =  shorterText(data.overview);
 	 	var date = data.release_date;
 	 	var rating = data.vote_average;
 		var imgstring ="https://image.tmdb.org/t/p/w500/";
 
 		//var youtubeKey = data.videos.results[0].key;
+
 		var genres = [];
 		imgstring += data.poster_path;
 
@@ -121,16 +126,14 @@ function filmDescription(id){
 		$(".film:last .film-description .film-summary").append(createElement("p", "<span class='bold'>Realse:</span> "+date, ""));
 		$(".film:last .film-description .film-summary").append(createElement("p", "<span class='bold'>Rating:</span> "+rating, "rating"));
 		$(".film:last").append("<i class='close fa fa-times fa-2x' aria-hidden='true'></i>");
-		$(".film:last").slideDown(100, "swing");
-
-
+		$(".film:last").fadeIn();
 
 	});
 }
 
 //Delegate function on every new film object
 $(document).on("click", ".film .close", function(){
-	$(this).parent().slideUp(function(){
+	$(this).parent().fadeOut(function(){
 		$(this).remove();
 	});
 });
@@ -187,5 +190,14 @@ function clear(element, value){
 		$(element).html("");
 	}
 }
+
+//If text is too long, makes it shorter
+function shorterText(data){
+	var text = data;
+		if(text.length > 320){
+			text = text.slice(0,320);
+		}
+		return text;
+	}
 
 

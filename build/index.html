@@ -9,6 +9,12 @@
 	<title></title>
 </head>
 <body>
+
+<div id="loader-wrapper">
+    <div class="load">
+      <hr/><hr/><hr/><hr/>
+    </div>
+</div>
 <div class="search">
 	<form class="form-search">
 		<input id="search-text" type="text" name="search" placeholder=""><span id="search-icon"><i class="fa fa-search fa-2x" aria-hidden="true"></i></span>
@@ -17,7 +23,14 @@
 </div>
 <div id="random"><span>RANDOM</span></div> 
 <script src="js/jquery-3.1.1.min.js"></script>
+
+<script type="text/javascript">
+	$(window).load(function() {
+    $("#loader-wrapper").fadeOut();
+});
+ 
+</script>
 <script src="js/search.min.js"></script>
 <script src="js/main.min.js"></script>
 </body>
-</html>
+</html>  
