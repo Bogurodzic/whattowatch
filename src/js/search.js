@@ -113,9 +113,13 @@ function filmDescription(id){
 
 		console.log(data);
 		//$(document.body).append(createElement("div", "", "film"));
-		$(createElement("div", "", "film")).appendTo($(document.body)).css("display", "none");
+		$(createElement("div", "", "film")).appendTo($(document.body));
 		$(".film:last").append(createElement("div", "", "film-header"));
-		$(".film-header:last").append(createImage(imgstring)).addClass("film-image");
+		$(createImage(imgstring)).on("load", function(){
+			$(".film-header:last").addClass("film-image");
+			$(this).addClass("invisible").appendTo($(".film-header:last")).fadeIn(500);
+		});
+		//$(".film-header:last").append(createImage(imgstring)).addClass("film-image"); 
 		$(".film:last").append(createElement("div", "", "film-description"));
 		$(".film:last .film-description").append(createElement("h2", title, "film-title"));
 		$(".film:last .film-description .film-title").append(createElement("span", "  org title: '"+orgTitle+"'", "film-title-org"));
@@ -126,7 +130,6 @@ function filmDescription(id){
 		$(".film:last .film-description .film-summary").append(createElement("p", "<span class='bold'>Realse:</span> "+date, ""));
 		$(".film:last .film-description .film-summary").append(createElement("p", "<span class='bold'>Rating:</span> "+rating, "rating"));
 		$(".film:last").append("<i class='close fa fa-times fa-2x' aria-hidden='true'></i>");
-		$(".film:last").fadeIn();
 
 	});
 }
@@ -146,8 +149,8 @@ function createElement(type, value, eleClass){
 	}
 }
 
-function createImage(link){
-	return ("<img src="+link+">");
+function createImage(link){  
+	return ("<img class='lazy' src="+link+">");
 }
 
 //Check if film has key data and create youtube trailer, if not, create image

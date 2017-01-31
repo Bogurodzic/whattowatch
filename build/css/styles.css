@@ -11,8 +11,13 @@ background-image: repeating-linear-gradient(30deg,
 
 height: 100vh;
 }
+
 .bold {
 	font-weight: bold;
+}
+
+.invisible {
+	display: none;
 }
 
 /*** RANDOM BUTTON ***/
@@ -99,8 +104,6 @@ height: 100vh;
 #search-text {
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
-	-webkit-border-radius: 10px;
-	        border-radius: 10px;
 	width: 100px;
 	height: 35px;
 	-webkit-transition: width 0.5s linear;
