@@ -5,7 +5,7 @@ $("#random").click(function(){
 //get random movie
 function getRandomMovie(){
 	var filmId;
-	var random = Math.floor((Math.random() * 1000) + 1) + 68;
+	var random = getRandomNumber();
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
@@ -19,8 +19,7 @@ function getRandomMovie(){
 	//if movie doesnt exist, start function once again
 	.always(function (jqXHR){
 		filmId = random;
-		console.log(jqXHR.status);
-		if(jqXHR.status === 404){
+		if(checkStatus(jqXHR.status)){
 			getRandomMovie();
 		}
 	})
@@ -30,3 +29,13 @@ function getRandomMovie(){
 
 
 };
+
+function checkStatus(status){
+	if(status === 404){
+		return true;
+	}
+}
+
+function getRandomNumber(){
+	return Math.floor((Math.random() * 1000) + 1) + 68;
+}

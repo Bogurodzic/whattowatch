@@ -31,7 +31,7 @@ $(searchIcon).on("click", function(){
 	if($(search).val() !== ""){
 		//if search input isn't empty, looks for provided value
 		clear("#search-list", "html");
-		filmSearch($(search).val());		
+		filmSearch($(search).val());
 	} else {
 		alert("Please provide which film are you looking for.");
 	}
@@ -62,12 +62,12 @@ $(".search").mouseleave(function(){
 
 //create a list with films according to provided string
 function filmSearch(query){
-	
+
 	var link = "https://api.themoviedb.org/3/search/movie?api_key=c4d475955f6473a3c143f712208e6b17&query="+query;
 	var settings = getSettings(link);
 
 	$.ajax(settings).done(function(data){
-		
+
 		if(data.total_results === 0){
 			$(createElement("li", "No data found.")).appendTo($("#search-list"));
 		}
@@ -119,7 +119,7 @@ function filmDescription(id){
 			$(".film-header:last").addClass("film-image");
 			$(this).addClass("invisible").appendTo($(".film-header:last")).fadeIn(500);
 		});
-		//$(".film-header:last").append(createImage(imgstring)).addClass("film-image"); 
+		//$(".film-header:last").append(createImage(imgstring)).addClass("film-image");
 		$(".film:last").append(createElement("div", "", "film-description"));
 		$(".film:last .film-description").append(createElement("h2", title, "film-title"));
 		$(".film:last .film-description .film-title").append(createElement("span", "  org title: '"+orgTitle+"'", "film-title-org"));
@@ -149,7 +149,7 @@ function createElement(type, value, eleClass){
 	}
 }
 
-function createImage(link){  
+function createImage(link){
 	return ("<img class='lazy' src="+link+">");
 }
 
@@ -182,13 +182,13 @@ function getSettings(url){
 	 	"url": url,
 	 	"method": "GET",
 	 	"headers": {},
-	  	"data": "{}"		
+	  	"data": "{}"
 	}
 }
 
 function clear(element, value){
 	if (value === "val") {
-		$(element).val("");		
+		$(element).val("");
 	} else if (value === "html") {
 		$(element).html("");
 	}
@@ -197,10 +197,18 @@ function clear(element, value){
 //If text is too long, makes it shorter
 function shorterText(data){
 	var text = data;
-		if(text.length > 320){
-			text = text.slice(0,320);
-		}
-		return text;
+	if(checkTextLength(text)){
+		cutText(text);
 	}
+	return text;
+}
 
+function checkTextLength(text){
+    if(text.length > 320){
+        return true;
+    }
+}
 
+function cutText(text){
+    return text.slice(0,320)
+}
